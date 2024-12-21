@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salon Billing Invoice</title>
+    <link rel="stylesheet" href="billing.css">
+    <script src="billing.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script>
+        (function(){
+            emailjs.init("WNZiTxmlAJ97N_FS5"); // Replace YOUR_PUBLIC_KEY with your actual EmailJS public key
+        })();
+    </script>
+</head>
+<body>
+    <div class="invoice-container">
+        <header>
+            <h1 style="color: #FFFFFF; padding: 15px; background: #A03232; border-radius: 10px;">Md. Habib's Billing Invoice</h1>
+            <p><strong>Date:</strong> <span id="invoiceDate"></span></p>
+            <p><strong>Invoice Number:</strong> <span id="invoiceNumber"></span></p>
+        </header>
+        
+        <!-- Form to send invoice via EmailJS -->
+        <form id="appointmentForm">
+            <section>
+                <h2>Customer Details</h2>
+                <label for="customerName"><strong>Name:</strong></label>
+                <input type="text" id="customerName" name="customer_name" placeholder="Enter customer name" required>
+                <label for="customerContact"><strong>Customer Email ID:</strong></label>
+                <input type="email" id="customerContact" name="customer_email" placeholder="Enter customer email id" required>
+            </section>
+
+            <section>
+                <h2>Service(s) Provided</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="background: #A03232;">#</th>
+                            <th style="background: #A03232;">Service Name</th>
+                            <th style="background: #A03232;">Description</th>
+                            <th style="background: #A03232;">Quantity</th>
+                            <th style="background: #A03232;">Unit Price (INR)</th>
+                            <th style="background: #A03232;">Total (INR)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="servicesTable">
+                        <!-- User-added rows go here -->
+                    </tbody>
+                </table>
+                <button type="button" id="addServiceButton">Add Service</button>
+            </section>
+
+            <section>
+                <h2>Product(s) Sold</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="background: #A03232;">#</th>
+                            <th style="background: #A03232;">Product Name</th>
+                            <th style="background: #A03232;">Description</th>
+                            <th style="background: #A03232;">Quantity</th>
+                            <th style="background: #A03232;">Unit Price (INR)</th>
+                            <th style="background: #A03232;">Total (INR)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productsTable">
+                        <!-- User-added rows go here -->
+                    </tbody>
+                </table>
+                <button type="button" id="addProductButton">Add Product</button>
+            </section>
+
+            <section>
+                <h2>Summary</h2>
+                <p><strong>Subtotal for Services (INR):</strong> <span id="subtotalServices">0.00</span></p>
+                <p><strong>Subtotal for Products (INR):</strong> <span id="subtotalProducts">0.00</span></p>
+                <p><strong>Discount (INR):</strong> <input type="number" id="discount" name="discount" value="0" oninput="updateSummary()"></p>
+                <p><strong>Grand Total (INR):</strong> <span id="grandTotal">0.00</span></p>
+            </section>
+            <button type="submit">Send Invoice</button>
+            <section>
+                <h2>Download Invoice</h2>
+                <button id="downloadPDF">Download Invoice as PDF</button>
+            </section>
+        </form>
+        
+        <footer>
+            <p>Thank you for visiting! We hope to see you again soon.</p>
+        </footer>
+    </div>
+</body>
+</html>
