@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Salon Billing Invoice</title>
     <link rel="stylesheet" href="billing.css">
-    <script src="billing.js" defer></script>
+    <script src="billing1.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script>
@@ -17,6 +17,7 @@
 <body>
     <div class="invoice-container">
         <header>
+            <div style="text-align: center;"><img src="Habibs_logo.jpg" alt="Habib's Hair & Beauty"></div>
             <h1 style="color: #FFFFFF; padding: 15px; background: #A03232; border-radius: 10px;">Md. Habib's Billing Invoice</h1>
             <p><strong>Date:</strong> <span id="invoiceDate"></span></p>
             <p><strong>Invoice Number:</strong> <span id="invoiceNumber"></span></p>
@@ -27,9 +28,13 @@
             <section>
                 <h2>Customer Details</h2>
                 <label for="customerName"><strong>Name:</strong></label>
-                <input type="text" id="customerName" name="customer_name" placeholder="Enter customer name" required>
-                <label for="customerContact"><strong>Customer Email ID:</strong></label>
-                <input type="email" id="customerContact" name="customer_email" placeholder="Enter customer email id" required>
+                <input type="text" id="customerName" name="customer_name" placeholder="Enter customer's name" required>
+                <label for="customerPhone"><strong>Phone Number:</strong></label>
+                <input type="text" id="customerPhone" name="customer_phone" placeholder="Enter customer's phone number" required>
+                <!--<label for="customerContact"><strong>Customer Email ID:</strong></label>
+                <input type="email" id="customerContact" name="customer_email" placeholder="Enter customer email id" required>-->
+                <label for="customerContact"><strong>Email ID:</strong></label>
+                <input type="email" id="customerContact" name="customer_email" placeholder="Enter customer's email ID">
             </section>
 
             <section>
@@ -76,7 +81,10 @@
                 <h2>Summary</h2>
                 <p><strong>Subtotal for Services (INR):</strong> <span id="subtotalServices">0.00</span></p>
                 <p><strong>Subtotal for Products (INR):</strong> <span id="subtotalProducts">0.00</span></p>
-                <p><strong>Discount (INR):</strong> <input type="number" id="discount" name="discount" value="0" oninput="updateSummary()"></p>
+                <!--<p><strong>Discount (INR):</strong> <input type="number" id="discount" name="discount" value="0" oninput="updateSummary()"></p>-->
+                <p><strong>Discount (%):</strong> 
+                    <input type="number" id="discount" name="discount" value="0" min="0" max="100" step="1" oninput="updateSummary()">
+                 </p>
                 <p><strong>Grand Total (INR):</strong> <span id="grandTotal">0.00</span></p>
             </section>
             <button type="submit">Send Invoice</button>
@@ -86,8 +94,8 @@
             </section>
         </form>
         
-        <footer>
-            <p>Thank you for visiting! We hope to see you again soon.</p>
+        <footer style="text-align: center; padding: 10px; background-color: #f8f9fa; margin-top: 20px;">
+            <p>&copy; 2024 NiceCare. All rights reserved.</p>
         </footer>
     </div>
 </body>
