@@ -150,7 +150,6 @@ document.getElementById("appointmentForm").addEventListener("submit", function(e
         });
 });
 
-
 document.getElementById("downloadPDF").addEventListener("click", function () { 
     const { jsPDF } = window.jspdf;
 
@@ -197,22 +196,23 @@ document.getElementById("downloadPDF").addEventListener("click", function () {
     // doc.text(`Customer Email: ${customerEmail}`, 10, titleY + 55);
 
     // Add a section for services with bold heading
+    const servicesStartY = titleY + 55;
     doc.setFont("helvetica", "bold");
-    doc.text("Services Provided:", 10, titleY + 55);
+    doc.text("Services Provided:", 10, servicesStartY);
 
     // Fetch services and products
     const services = getServiceNames();
     doc.setFont("helvetica", "normal");
     if (services.length > 0) {
         services.forEach((service, index) => {
-            doc.text(`${index + 1}. ${service}`, 10, titleY + 65 + index * 10);
+            doc.text(`${index + 1}. ${service}`, 10, servicesStartY + 10 + index * 10);
         });
     } else {
-        doc.text("No services provided.", 10, titleY + 65);
+        doc.text("No services provided.", 10, servicesStartY + 10);
     }
 
     // Add a section for products with bold heading
-    const productsStartY = titleY + 65 + services.length * 10 + 10;
+    const productsStartY = servicesStartY + 20 + services.length * 10;
     doc.setFont("helvetica", "bold");
     doc.text("Products Sold:", 10, productsStartY);
 
@@ -226,8 +226,17 @@ document.getElementById("downloadPDF").addEventListener("click", function () {
         doc.text("No products sold.", 10, productsStartY + 10);
     }
 
+    // Add Service Provider and Payment Method
+    const serviceProvider = document.getElementById("serviceProvider").value;
+    const paymentMethod = document.getElementById("paymentMethod").value;
+    const detailsStartY = productsStartY + 20 + products.length * 10;
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "bold");
+    doc.text(`Service Provider: ${serviceProvider}`, 10, detailsStartY);
+    doc.text(`Payment Method: ${paymentMethod}`, 10, detailsStartY + 10);
+
     // Add a summary section with bold headings and subtotal lines
-    const summaryStartY = productsStartY + 20 + products.length * 10;
+    const summaryStartY = detailsStartY + 30; // Reduced space here
     doc.setFont("helvetica", "bold");
     doc.text("Summary:", 10, summaryStartY);
 
