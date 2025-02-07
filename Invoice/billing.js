@@ -265,7 +265,7 @@ document.getElementById("downloadPDF").addEventListener("click", function () {
 });
 
 
-// TODO: 
+// TODO: Print Invoice (Thermal Printer)
 
 document.getElementById('printInvoiceButton').addEventListener('click', function () {
     try {
@@ -279,42 +279,6 @@ document.getElementById('printInvoiceButton').addEventListener('click', function
         const discount = document.getElementById('discount')?.value || '0';
         const grandTotal = document.getElementById('grandTotal')?.innerText || '0.00';
 
-        // Helper function to generate table rows
-        // * old
-        /*
-        const generateTableHTML = (rows, tableName) => {
-            let tableHTML = `
-            <table>
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>${tableName} Name</th>
-                        <th>Description</th>
-                        <th>Quantity</th>
-                        <th>Unit Price (INR)</th>
-                        <th>Total (INR)</th>
-                    </tr>
-                </thead>
-            <tbody>
-            `;
-            rows.forEach((row, index) => {
-                const cells = row.querySelectorAll('td');
-                if (cells.length > 0) {
-                    tableHTML += `<tr>
-                        <td>${index + 1}</td>
-                        <td>${cells[1]?.querySelector('input')?.value || ''}</td>
-                        <td>${cells[2]?.querySelector('input')?.value || ''}</td>
-                        <td>${cells[3]?.querySelector('input')?.value || ''}</td>
-                        <td>${cells[4]?.querySelector('input')?.value || ''}</td>
-                        <td>${cells[5]?.querySelector('input')?.value || ''}</td>
-                    </tr>`;
-                }
-            });
-            return tableHTML + '</tbody></table>';
-        };
-        */
-        // * old
-
         // * new
         const generateTableHTML = (rows, tableName) => {
             let tableHTML = `
@@ -323,7 +287,7 @@ document.getElementById('printInvoiceButton').addEventListener('click', function
                         <tr>
                             <th>#</th>
                             <th>${tableName} Name</th>
-                            <th>Description</th>
+                            
                             <th>Quantity</th>
                             <th>Unit Price (INR)</th>
                             <th>Total (INR)</th>
@@ -342,7 +306,7 @@ document.getElementById('printInvoiceButton').addEventListener('click', function
                     tableHTML += `<tr>
                         <td>${index + 1}</td>
                         <td>${cells[1]?.querySelector('input')?.value || ''}</td>
-                        <td>${cells[2]?.querySelector('input')?.value || ''}</td>
+                        
                         <td>${quantity}</td>
                         <td>${unitPrice}</td>
                         <td>${total.toFixed(2)}</td> <!-- Display the calculated total -->
@@ -377,10 +341,11 @@ document.getElementById('printInvoiceButton').addEventListener('click', function
                     <title>Print Invoice</title>
                     <style>
                         @page { size: 3in 10in; margin: 0; }
-                        body { font-family: Arial, sans-serif; font-size: 12px; margin: 0; padding: 10px; }
+                        body { font-family: Arial, sans-serif; font-size: 16px; margin: 0; padding: 5px; }
                         .invoice-container { width: 100%; }
                         table { width: 100%; border-collapse: collapse; }
                         th, td { border: 1px solid black; padding: 5px; text-align: left; }
+                        .core-summary-tables-components {font-size: 20px;}
                     </style>
                 </head>
                 <body>
@@ -393,19 +358,20 @@ document.getElementById('printInvoiceButton').addEventListener('click', function
                         <p>Bongaon, Bichalihata, Court Rd, 743235</p>
                         <p><strong>Date:</strong> ${invoiceDate}</p>
                         <p><strong>Invoice Number:</strong> ${invoiceNumber}</p>
-                        <h2>Customer Details</h2>
+                        <h5>Customer Details</h5>
                         <p><strong>Name:</strong> ${customerName}</p>
                         <p><strong>Phone Number:</strong> ${customerPhone}</p>
-                        <p><strong>Email ID:</strong> ${customerEmail}</p>
-                        <h2>Service(s) Provided</h2>
-                        ${servicesTableHTML}
-                        <h2>Product(s) Sold</h2>
-                        ${productsTableHTML}
-                        <h2>Summary</h2>
-                        <p><strong>Subtotal for Services (INR):</strong> ${subtotalServices}</p>
-                        <p><strong>Subtotal for Products (INR):</strong> ${subtotalProducts}</p>
-                        <p><strong>Discount (%):</strong> ${discount}</p>
-                        <p><strong>Grand Total (INR):</strong> ${grandTotal}</p>
+                        <div class="core-summary-tables-components">
+                            <h5>Service(s) Provided</h5>
+                            ${servicesTableHTML}
+                            <h5>Product(s) Sold</h5>
+                            ${productsTableHTML}
+                            <h5>Summary</h5>
+                            <p><strong>Subtotal for Services (INR):</strong> ${subtotalServices}</p>
+                            <p><strong>Subtotal for Products (INR):</strong> ${subtotalProducts}</p>
+                            <p><strong>Discount (%):</strong> ${discount}</p>
+                            <p><strong>Grand Total (INR):</strong> ${grandTotal}</p>
+                        </div>
                         <p><strong>Payment Method:</strong> ${document.getElementById('paymentMethod').value}</p>
                         <p><strong>Service Provider:</strong> ${document.getElementById('serviceProvider').value}</p>
                         <br>
